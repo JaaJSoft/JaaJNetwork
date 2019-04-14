@@ -16,7 +16,6 @@
 package io.jaaj.network;
 
 
-
 import io.jaaj.network.exception.ExceptionCannotDisconnect;
 import io.jaaj.network.exception.ExceptionConnectionFailure;
 import io.jaaj.network.exception.ExceptionPortInvalid;
@@ -80,5 +79,13 @@ public class Client implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(ip, port);
+    }
+
+    public void send(Serializable serializable) throws IOException {
+        util.sendSerializable(socket, serializable);
+    }
+
+    public Serializable receive() throws IOException, ClassNotFoundException {
+        return util.receiveSerializable(socket);
     }
 }

@@ -15,6 +15,8 @@
 
 package io.jaaj.network;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.net.Socket;
 
 public abstract class ServerRunnable implements Runnable, Cloneable {
@@ -40,4 +42,11 @@ public abstract class ServerRunnable implements Runnable, Cloneable {
         return super.clone();
     }
 
+    public void send(Serializable serializable) throws IOException {
+        util.sendSerializable(clientSocket, serializable);
+    }
+
+    public Serializable receive() throws IOException, ClassNotFoundException {
+        return util.receiveSerializable(clientSocket);
+    }
 }

@@ -29,7 +29,6 @@ import java.net.InetAddress;
 import static org.junit.Assert.assertEquals;
 
 public class NetworkTest {
-    private Server server;
     private Client c;
 
     @Before
@@ -59,8 +58,8 @@ public class NetworkTest {
     @Test
     public void sendStringTest() throws Exception {
         String test = "test";
-        util.sendSerializable(c.getSocket(), test);
-        String result = (String) util.receiveSerializable(c.getSocket());
+        c.send(test);
+        String result = (String) c.receive();
         assertEquals(test, result);
     }
 

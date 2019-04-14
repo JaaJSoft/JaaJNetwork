@@ -22,8 +22,8 @@ public class ServerRunnableEcho extends ServerRunnable {
     @Override
     public void run() {
         try {
-            String temp = (String) util.receiveSerializable(clientSocket);
-            util.sendSerializable(clientSocket, temp);
+            String temp = (String) receive();
+            send(temp);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
