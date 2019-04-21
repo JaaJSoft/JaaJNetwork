@@ -16,11 +16,12 @@
 package io.jaaj.network;
 
 import java.io.IOException;
+import java.net.Socket;
 
 public class ServerRunnableEcho extends ServerRunnable {
 
     @Override
-    public void run() {
+    public void handle(Socket clientSocket) {
         try {
             String temp = (String) receive();
             send(temp);

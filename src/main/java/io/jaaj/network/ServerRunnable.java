@@ -23,14 +23,8 @@ public abstract class ServerRunnable implements Runnable, Cloneable {
 
     protected Socket clientSocket;
 
-    protected String key;
-
-    public void setClientSocket(Socket clientSocket) {
+    void setClientSocket(Socket clientSocket) {
         this.clientSocket = clientSocket;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public Socket getClientSocket() {
@@ -42,11 +36,18 @@ public abstract class ServerRunnable implements Runnable, Cloneable {
         return super.clone();
     }
 
-    public void send(Serializable serializable) throws IOException {
+    @Override
+    public final void run() {
+        handle(clientSocket);
+    }
+
+    public abstract void handle(Socket clientSocket);
+
+    protected void send(Serializable serializable) throws IOException {
         util.sendSerializable(clientSocket, serializable);
     }
 
-    public Serializable receive() throws IOException, ClassNotFoundException {
+    protected Serializable receive() throws IOException, ClassNotFoundException {
         return util.receiveSerializable(clientSocket);
     }
 }
