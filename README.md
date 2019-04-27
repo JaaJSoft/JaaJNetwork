@@ -2,7 +2,7 @@
 
 A simple network library for Java
 
-## Examples
+## Example
 
 ### Server - Echo
 
