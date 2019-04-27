@@ -1,2 +1,36 @@
 # JaaJNetwork
+
 A simple network library for Java
+
+## Examples
+
+### Server - Echo
+
+```java
+Server s = new Server(4040, new ServerRunnable() {
+    @Override
+    public void handle(Socket clientSocket) {
+        try {
+            String message = (String) receive();
+            send(message);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+});
+s.start();
+```
+
+### Client - echo
+```java
+Client c = new Client(InetAddress.getByName("127.0.0.1"), 4040);
+try {
+    c.connect();
+    c.send("jeej");
+    System.out.println(c.receive());
+    c.disconnect();
+} catch (ExceptionConnectionFailure | ClassNotFoundException | ExceptionCannotDisconnect e) {
+    e.printStackTrace();
+}
+```
+
