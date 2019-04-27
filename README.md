@@ -26,7 +26,7 @@ s.start();
 Client c = new Client(InetAddress.getByName("127.0.0.1"), 4040);
 try {
     c.connect();
-    c.send("jeej");
+    c.send("jeej"); // you can send anything that is serializable
     System.out.println(c.receive());
     c.disconnect();
 } catch (ExceptionConnectionFailure | ClassNotFoundException | ExceptionCannotDisconnect e) {
