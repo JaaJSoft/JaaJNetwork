@@ -21,7 +21,7 @@ Server s = new Server(4040, new ServerRunnable() {
 s.start();
 ```
 
-### Client - echo
+### Client - Echo
 ```java
 Client c = new Client(InetAddress.getByName("127.0.0.1"), 4040);
 try {
