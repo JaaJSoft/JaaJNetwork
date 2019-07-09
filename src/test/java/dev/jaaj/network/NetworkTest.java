@@ -13,12 +13,12 @@
  *  limitations under the License.
  */
 
-package io.jaaj.network;
+package dev.jaaj.network;
 
 
-import io.jaaj.network.exception.ExceptionCannotDisconnect;
-import io.jaaj.network.exception.ExceptionConnectionFailure;
-import io.jaaj.network.exception.ExceptionPortInvalid;
+import dev.jaaj.network.exception.ExceptionCannotDisconnect;
+import dev.jaaj.network.exception.ExceptionConnectionFailure;
+import dev.jaaj.network.exception.ExceptionPortInvalid;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

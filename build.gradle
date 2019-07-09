@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
 }
 
-group 'io.jaaj'
+group 'dev.jaaj'
 version '0.1'
 
 sourceCompatibility = 1.8

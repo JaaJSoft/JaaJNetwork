@@ -13,7 +13,7 @@
  *  limitations under the License.
  */
 
-package io.jaaj.network;
+package dev.jaaj.network;
 
 import java.io.IOException;
 import java.io.Serializable;

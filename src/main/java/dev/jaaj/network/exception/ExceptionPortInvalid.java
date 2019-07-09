@@ -13,7 +13,7 @@
  *  limitations under the License.
  */
 
-package io.jaaj.network.exception;
+package dev.jaaj.network.exception;
 
 public class ExceptionPortInvalid extends Exception {
 }

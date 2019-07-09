@@ -13,20 +13,7 @@
  *  limitations under the License.
  */
 
-package io.jaaj.network;
+package dev.jaaj.network.exception;
 
-import java.io.IOException;
-import java.net.Socket;
-
-public class ServerRunnableEcho extends ServerRunnable {
-
-    @Override
-    public void handle(Socket clientSocket) {
-        try {
-            String temp = (String) receive();
-            send(temp);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+public class ExceptionCannotDisconnect extends Exception {
 }

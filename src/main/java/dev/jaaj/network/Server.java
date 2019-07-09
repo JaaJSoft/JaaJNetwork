@@ -13,11 +13,11 @@
  *  limitations under the License.
  */
 
-package io.jaaj.network;
+package dev.jaaj.network;
 
 
-import io.jaaj.network.exception.ExceptionPortInvalid;
-import io.jaaj.network.exception.ExceptionServerRunnableNotEnded;
+import dev.jaaj.network.exception.ExceptionPortInvalid;
+import dev.jaaj.network.exception.ExceptionServerRunnableNotEnded;
 
 import java.io.IOException;
 import java.io.Serializable;
