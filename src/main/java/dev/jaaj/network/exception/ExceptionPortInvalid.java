@@ -15,5 +15,5 @@
 
 package dev.jaaj.network.exception;
 
-public class ExceptionPortInvalid extends Exception {
+public class ExceptionPortInvalid extends RuntimeException {
 }

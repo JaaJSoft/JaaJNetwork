@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -52,11 +53,10 @@ public class Server implements Serializable {
                 Socket client = serverSocket.accept();
                 ServerRunnable r;
                 r = (ServerRunnable) runnable.clone();
-
                 r.setClientSocket(client);
-                //GET KEY
-                //r.setKey();
                 executorService.submit(r);
+            } catch (SocketException i) {
+                run = false;
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
