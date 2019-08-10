@@ -16,11 +16,14 @@
 package dev.jaaj.network;
 
 
+import dev.jaaj.network.exception.ExceptionCannotDisconnect;
+import dev.jaaj.network.exception.ExceptionConnectionFailure;
 import dev.jaaj.network.exception.ExceptionPortInvalid;
 import dev.jaaj.network.exception.ExceptionServerRunnableNotEnded;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -55,10 +58,8 @@ public class Server implements Serializable {
                 r = (ServerRunnable) runnable.clone();
                 r.setClientSocket(client);
                 executorService.submit(r);
-            } catch (SocketException i) {
+            } catch (SocketException | CloneNotSupportedException i) {
                 run = false;
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -67,8 +68,12 @@ public class Server implements Serializable {
     public void stop() throws ExceptionServerRunnableNotEnded {
         try {
             serverSocket.close();
+            Client client = new Client(InetAddress.getByName("127.0.0.1"), port);
+            client.connect(); // to make the server crash and stop
+            client.disconnect();
         } catch (IOException e) {
             throw new ExceptionServerRunnableNotEnded();
+        } catch (ExceptionConnectionFailure | ExceptionCannotDisconnect ignored) {
         } finally {
             run = false;
         }

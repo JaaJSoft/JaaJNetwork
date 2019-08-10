@@ -19,6 +19,7 @@ package dev.jaaj.network;
 import dev.jaaj.network.exception.ExceptionCannotDisconnect;
 import dev.jaaj.network.exception.ExceptionConnectionFailure;
 import dev.jaaj.network.exception.ExceptionPortInvalid;
+import dev.jaaj.network.exception.ExceptionServerRunnableNotEnded;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,13 +31,14 @@ import static org.junit.Assert.assertEquals;
 
 public class NetworkTest {
     private Client c;
+    private Server s;
 
     @Before
     public void setUp() throws IOException, ExceptionPortInvalid, ExceptionConnectionFailure, InterruptedException {
         int port = 54324;
         Thread t = new Thread(() -> {
             try {
-                Server s = new Server(port, new ServerRunnableEcho());
+                s = new Server(port, new ServerRunnableEcho());
                 s.start();
             } catch (IOException | ExceptionPortInvalid e) {
                 e.printStackTrace();
@@ -45,14 +47,13 @@ public class NetworkTest {
         c = new Client(InetAddress.getByName("127.0.0.1"), port);
         t.start();
         Thread.sleep(1000);
-        System.out.println("Connexion");
         c.connect();
     }
 
     @After
-    public void tearDown() throws ExceptionCannotDisconnect {
+    public void tearDown() throws ExceptionCannotDisconnect, ExceptionServerRunnableNotEnded {
         c.disconnect();
-        //s.stop();
+        s.stop();
     }
 
     @Test
