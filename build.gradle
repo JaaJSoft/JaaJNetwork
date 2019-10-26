@@ -1,35 +1,68 @@
 plugins {
     id 'java-library'
-    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.8.4"
+    id "maven-publish"
 }
-
 group 'dev.jaaj'
 version '0.2'
 
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/JaaJ-dev/JaaJNetwork")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
-                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
-            }
-        }
-    }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+bintray {
+    user = BINTRAY_USER
+    key = BINTRAY_KEY
+    publications = ['mavenPublication']
+    pkg {
+        repo = 'JaaJ'
+        name = project.name
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/JaaJ-dev/JaaJNetwork'
+        issueTrackerUrl = 'https://github.com/JaaJ-dev/JaaJNetwork/issues'
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+            vcsTag = project.version
         }
     }
 }
+
+publishing {
+    publications {
+        mavenPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId project.group
+            artifactId project.name
+            version project.version
+        }
+    }
+}
+
